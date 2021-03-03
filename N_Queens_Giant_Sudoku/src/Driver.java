@@ -30,8 +30,7 @@ public class Driver {
 		
 		while(invalidInput(number_of_queens, 8, 200)) {
 			System.out.println("Enter the number of queens, 8-200:");
-			//number_of_queens = keys.nextInt();
-			number_of_queens = 200;
+			number_of_queens = keys.nextInt();
 		}
 		return number_of_queens;
 	}
@@ -53,8 +52,7 @@ public class Driver {
 		
 		while(invalidInput(game, 0, 1)) {
 			System.out.println("Enter 0 for N-Queens, enter 1 for sudoku:");
-			//game = keys.nextInt();
-			game = 0;
+			game = keys.nextInt();
 		}
 		
 		if (game == 0) {

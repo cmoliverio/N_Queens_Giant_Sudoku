@@ -364,6 +364,5 @@ public class NQueens {
 	public void printBoard(int conflicts) {
 		System.out.println("Conflicts: " + conflicts + "    Queens: " + Arrays.toString(queens));
 	}
-	
 
 }

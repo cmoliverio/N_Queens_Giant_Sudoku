@@ -1,11 +1,15 @@
 /**
- * @author Christian Oliverio
+ * @author Christian Oliverio, Benajmin Bowering, Jack Peterson
  * @date 23 February 2021
  * @project Project 2
  * @description Project fits n number of queens into an n x n grid
  * or solves a sudoku of size 25 x 25
  */
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Driver {
@@ -46,6 +50,28 @@ public class Driver {
 		return verbose != 0;
 	}
 	
+	public static BufferedReader getFile() {
+		FileReader file;
+		BufferedReader reader;
+		
+		System.out.println("Enter the name of the csv file with Sudoku puzzle (without .csv file extension)");
+		while(true) {
+			try {
+				String file_name = keys.nextLine();
+				file = new FileReader(file_name + ".csv");
+				reader = new BufferedReader(file);
+			} catch (FileNotFoundException e) {
+				System.out.println("File does not exist. Try again.");
+				
+				continue;
+			}
+			
+			break;
+		}
+		
+		return reader;
+	}
+	
 	public static void main(String[] args) {
 		Scanner keys = new Scanner(System.in);
 		int game = -1;
@@ -67,7 +93,35 @@ public class Driver {
 		}
 		
 		if(game == 1) {
-			String txt_file = "";
+			
+			BufferedReader file = getFile();
+			boolean verbose = getVerbose();
+			
+		    String line;
+		    int[][] board = new int[25][25];
+		    int depth = 0;
+		    
+		    try {
+				while ((line = file.readLine()) != null) {
+				    String[] values = line.split(",");
+				    
+				    for (int i = 0; i < values.length; i++) {
+				    	board[depth][i] = Integer.valueOf(values[i]);
+				    }
+				    depth++;
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
+		    Sudoku sudoku_game = new Sudoku(board, verbose);
+		    
+		    sudoku_game.playHillClimbing(board.clone());
+		    sudoku_game.playSimulatedAnnealing(board.clone());
 		}
 		
 	}
